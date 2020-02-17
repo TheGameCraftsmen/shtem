@@ -17,7 +17,10 @@ shtem.Player.prototype ={
 
     render : function(){
         var ctx = shtem.canvas.canvasTile.getContext("2d");
-        ctx.drawImage(
+        ctx.setTransform(1, 0, 0, 1, shtem.gameEngine.centerX, shtem.gameEngine.centerY);
+        ctx.rotate(Math.atan2(shtem.gameEngine.mouseY - shtem.gameEngine.centerY, shtem.gameEngine.mouseX - shtem.gameEngine.centerX) + Math.PI / 2); 
+        console.log((Math.atan2(shtem.gameEngine.mouseY - shtem.gameEngine.centerY, shtem.gameEngine.mouseX - shtem.gameEngine.centerX) + Math.PI / 2 ) * 180/Math.PI);
+        /*ctx.drawImage(
            this.spriteset,
            0,
            0,
@@ -26,6 +29,8 @@ shtem.Player.prototype ={
            shtem.gameEngine.centerX,
            shtem.gameEngine.centerY,
            32,
-           32);
+           32);*/
+        ctx.drawImage(this.spriteset,-16, -16); 
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
 };

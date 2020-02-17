@@ -7,6 +7,8 @@ shtem.GameEngine = function (){
     this.img = null;
     this.centerY = 0;
     this.tileSize = 32;
+    this.moveX = 0;
+    this.moveY = 0;
 }
 
 shtem.GameEngine.prototype ={
@@ -30,6 +32,11 @@ shtem.GameEngine.prototype ={
             2048);
     },
 
+    mouseMoveEvent: function(evt){
+        var bounds = shtem.canvas.canvasMouse.getBoundingClientRect(); 
+        shtem.gameEngine.mouseX = evt.pageX - bounds.left;
+        shtem.gameEngine.mouseY = evt.pageY - bounds.top;
+    },
 
     clickEvent : function(evt){
 
@@ -47,6 +54,9 @@ shtem.GameEngine.prototype ={
         
         this.imgName = "assets/images/background/other_back6.png";
         this.img = shtem.tileset.get(this.imgName);
+
+        shtem.canvas.canvasMouse.addEventListener("click",shtem.gameEngine.clickEvent);
+        shtem.canvas.canvasMouse.addEventListener("mousemove",shtem.gameEngine.mouseMoveEvent);
     },
     
     
