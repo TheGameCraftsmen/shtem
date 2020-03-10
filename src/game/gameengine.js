@@ -40,7 +40,7 @@ shtem.GameEngine.prototype ={
     },
 
     clickEvent : function(evt){
-
+        shtem.player.fire();
     },
 
     init : function(){
