@@ -14,6 +14,7 @@ shtem.GameEngine = function (){
 shtem.GameEngine.prototype ={
     gameLoop: function (){
       shtem.canvas.clearCanvas();
+      shtem.player.loop();
       shtem.gameEngine.render();  
       shtem.player.render();
     },
