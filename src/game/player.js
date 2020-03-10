@@ -14,6 +14,7 @@ shtem.Player = function (){
 shtem.Player.prototype ={
     init : function (){
         this.sprite = "assets/images/ships/mship1_32.png";
+        
         this.spriteset = shtem.tileset.get(this.sprite);
     },
 
