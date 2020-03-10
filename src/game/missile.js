@@ -42,8 +42,8 @@ shtem.Missile.prototype ={
     render : function(){
         var ctx = shtem.canvas.canvasTile.getContext("2d");
         ctx.setTransform(1, 0, 0, 1, this.x - shtem.player.x + shtem.gameEngine.centerX, this.y - shtem.player.y + shtem.gameEngine.centerY);
-        ctx.rotate(self.angleRotation); 
-        ctx.drawImage(this.spriteset,-12,-37);
+        ctx.rotate(this.angleRotation); 
+        ctx.drawImage(this.spriteset,-21,-37);
         ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
 };

@@ -23,8 +23,8 @@ shtem.Player.prototype ={
 
     move : function(){
         if(! isNaN(this.angleRadian)){
-          //  this.x += Math.cos(Math.abs(this.angleRadian)) * this.speed;
-          //  this.y -= Math.sin(this.angleRadian) * this.speed;
+            this.x += Math.cos(Math.abs(this.angleRadian)) * this.speed;
+            this.y -= Math.sin(this.angleRadian) * this.speed;
         }
     },    
 
@@ -52,16 +52,18 @@ shtem.Player.prototype ={
 
     render : function(){
         var ctx = shtem.canvas.canvasTile.getContext("2d");
+
         ctx.setTransform(1, 0, 0, 1, shtem.gameEngine.centerX, shtem.gameEngine.centerY);
-        
-        ctx.rotate(this.angleRotation);
-        
+        ctx.rotate(this.angleRotation);        
         ctx.drawImage(this.spriteset,-16, -16); 
         ctx.setTransform(1, 0, 0, 1, 0, 0);
-        
+
         this.missiles.forEach(function(m){
             m.render();
         })
+
+        
+        
         
     }
 };
