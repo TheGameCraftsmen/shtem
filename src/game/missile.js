@@ -10,12 +10,13 @@ shtem.Missile = function (){
     this.angleDegrees = 0;
     this.angleRadian = 0;
     this.speed = 5;
+    this.stepX = 0;
+    this.stepY = 0;
 }
 
 shtem.Missile.prototype ={
     init : function (){
-        this.sprite = "assets/images/ships/beam.png";
-        //this.sprite = "assets/images/ships/mship1_32.png";
+        this.sprite = "assets/images/ships/beams.png";
         this.tx = 41;
         this.ty = 57;
         this.sizeX = 12;
@@ -26,12 +27,14 @@ shtem.Missile.prototype ={
         this.angleDegrees = shtem.player.angleDegrees;
         this.angleRotation = shtem.player.angleRotation;
         this.angleRadian = shtem.player.angleRadian;
+        this.stepX = Math.cos(Math.abs(this.angleRadian)) * this.speed;
+        this.stepY = -Math.sin(this.angleRadian) * this.speed;
     },
 
     move : function(){
         if(! isNaN(this.angleRadian)){
-            this.x += Math.cos(Math.abs(this.angleRadian)) * this.speed;
-            this.y -= Math.sin(this.angleRadian) * this.speed;
+            this.x += this.stepX;
+            this.y += this.stepY;
         }
     },    
 
@@ -43,7 +46,16 @@ shtem.Missile.prototype ={
         var ctx = shtem.canvas.canvasTile.getContext("2d");
         ctx.setTransform(1, 0, 0, 1, this.x - shtem.player.x + shtem.gameEngine.centerX, this.y - shtem.player.y + shtem.gameEngine.centerY);
         ctx.rotate(this.angleRotation); 
-        ctx.drawImage(this.spriteset,-21,-37);
+        ctx.drawImage(
+            this.spriteset,
+            9,
+            40,
+            11,
+            18,
+            -6,
+            -9,
+            11,
+            18);
         ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
 };
