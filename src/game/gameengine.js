@@ -9,13 +9,19 @@ shtem.GameEngine = function (){
     this.tileSize = 32;
     this.moveX = 0;
     this.moveY = 0;
+    this.ennemies = [];
 }
 
 shtem.GameEngine.prototype ={
     gameLoop: function (){
       shtem.canvas.clearCanvas();
-      shtem.player.loop();
       shtem.gameEngine.render();  
+      shtem.gameEngine.ennemies.forEach(function (ennemy){
+          ennemy.loop();
+          ennemy.render();
+      })
+      shtem.player.loop();
+      
       shtem.player.render();
     },
 
@@ -52,6 +58,9 @@ shtem.GameEngine.prototype ={
         shtem.tileset = new shtem.Tileset();
         shtem.player = new shtem.Player ();
         shtem.player.init();
+        let tempEnnemy = new shtem.Ennemy();
+        tempEnnemy.init();
+        this.ennemies.push(tempEnnemy);
         
         this.imgName = "assets/images/background/other_back6.png";
         this.img = shtem.tileset.get(this.imgName);

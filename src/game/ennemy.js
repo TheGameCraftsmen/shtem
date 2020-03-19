@@ -1,7 +1,7 @@
 'use strict';
 var shtem = shtem || {};
 
-shtem.Player = function (){
+shtem.Ennemy = function (){
     this.x = 1000;
     this.y = 1000;
     this.sprite = "";
@@ -14,11 +14,13 @@ shtem.Player = function (){
     this.lastFireTick = 0;
 }
 
-shtem.Player.prototype ={
+shtem.Ennemy.prototype ={
     init : function (){
         this.sprite = "assets/images/ships/mship1_32.png";
-
         this.spriteset = shtem.tileset.get(this.sprite);
+        this.angleDegrees = 180;
+        this.angleRotation = (this.angleDegrees-90)/-180*Math.PI;
+        this.angleRadian = this.angleDegrees * Math.PI / 180;
     },
 
     move : function(){
@@ -37,14 +39,11 @@ shtem.Player.prototype ={
             m.init(this);
             this.missiles.push(m);
         }
-        
     },
 
     loop : function(){
-        this.angleRotation = Math.atan2(shtem.gameEngine.mouseY - shtem.gameEngine.centerY, shtem.gameEngine.mouseX - shtem.gameEngine.centerX) + Math.PI / 2;
-        this.angleDegrees = this.angleRotation * -180/Math.PI + 90;
-        this.angleRadian = this.angleDegrees * Math.PI / 180;
         this.move();
+        this.fire();
         this.missiles.forEach(function(m){
             m.loop();
         })
@@ -52,18 +51,13 @@ shtem.Player.prototype ={
 
     render : function(){
         var ctx = shtem.canvas.canvasTile.getContext("2d");
-
-        ctx.setTransform(1, 0, 0, 1, shtem.gameEngine.centerX, shtem.gameEngine.centerY);
-        ctx.rotate(this.angleRotation);        
+        ctx.setTransform(1, 0, 0, 1, this.x - shtem.player.x + shtem.gameEngine.centerX, this.y - shtem.player.y + shtem.gameEngine.centerY);
+        ctx.rotate(this.angleRotation); 
         ctx.drawImage(this.spriteset,-16, -16); 
         ctx.setTransform(1, 0, 0, 1, 0, 0);
 
         this.missiles.forEach(function(m){
             m.render();
         })
-
-        
-        
-        
     }
 };

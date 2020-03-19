@@ -15,18 +15,18 @@ shtem.Missile = function (){
 }
 
 shtem.Missile.prototype ={
-    init : function (){
+    init : function (src){
         this.sprite = "assets/images/ships/beams.png";
         this.tx = 41;
         this.ty = 57;
         this.sizeX = 12;
         this.sizeY = 28;
-        this.x = shtem.player.x;
-        this.y = shtem.player.y;
+        this.x = src.x;
+        this.y = src.y;
         this.spriteset = shtem.tileset.get(this.sprite);
-        this.angleDegrees = shtem.player.angleDegrees;
-        this.angleRotation = shtem.player.angleRotation;
-        this.angleRadian = shtem.player.angleRadian;
+        this.angleDegrees = src.angleDegrees;
+        this.angleRotation = src.angleRotation;
+        this.angleRadian = src.angleRadian;
         this.stepX = Math.cos(Math.abs(this.angleRadian)) * this.speed;
         this.stepY = -Math.sin(this.angleRadian) * this.speed;
     },
