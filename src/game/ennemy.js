@@ -16,7 +16,7 @@ shtem.Ennemy = function (){
 
 shtem.Ennemy.prototype ={
     init : function (){
-        this.sprite = "assets/images/ships/mship1_32.png";
+        this.sprite = "assets/images/ships/turret.png";
         this.spriteset = shtem.tileset.get(this.sprite);
         this.angleDegrees = 180;
         this.angleRotation = (this.angleDegrees-90)/-180*Math.PI;
@@ -42,7 +42,7 @@ shtem.Ennemy.prototype ={
     },
 
     loop : function(){
-        this.move();
+        //this.move();
         this.fire();
         this.missiles.forEach(function(m){
             m.loop();
@@ -53,7 +53,17 @@ shtem.Ennemy.prototype ={
         var ctx = shtem.canvas.canvasTile.getContext("2d");
         ctx.setTransform(1, 0, 0, 1, this.x - shtem.player.x + shtem.gameEngine.centerX, this.y - shtem.player.y + shtem.gameEngine.centerY);
         ctx.rotate(this.angleRotation); 
-        ctx.drawImage(this.spriteset,-16, -16); 
+        //ctx.drawImage(this.spriteset,-16, -16); 
+        ctx.drawImage(
+            this.spriteset,
+            0,
+            0,
+            192,
+            192,
+            -16,
+            -16,
+            32,
+            32);
         ctx.setTransform(1, 0, 0, 1, 0, 0);
 
         this.missiles.forEach(function(m){
