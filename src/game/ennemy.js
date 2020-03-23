@@ -12,6 +12,7 @@ shtem.Ennemy = function (){
     this.speed = 2;
     this.missiles = [];
     this.lastFireTick = 0;
+    this.damage = 1;
 }
 
 shtem.Ennemy.prototype ={
@@ -41,6 +42,21 @@ shtem.Ennemy.prototype ={
         }
     },
 
+    missileCollisionToCharacter : function(){
+        var _this = this;
+        this.missiles.forEach(function(m){
+            if ((((shtem.player.x) < m.x && ((shtem.player.x+32) > m.x))
+                   || ((shtem.player.x > (m.x ) && (shtem.player.x) < (m.x + 32))))
+                && 
+                (((shtem.player.y) < m.y && ((shtem.player.y+32) > m.y))
+                   || ((shtem.player.y > (m.y ) && (shtem.player.y) < (m.y + 32))))
+            ){
+                m.state  = shtem.C.MISSILE_STATE_DESTROYED;
+                shtem.player.setDamage(_this.damage);
+            }
+        });
+    },
+
     loop : function(){
         //this.move();
         this.fire();
@@ -59,6 +75,7 @@ shtem.Ennemy.prototype ={
             }
             return;
         })
+        this.missileCollisionToCharacter();
     },
 
     render : function(){

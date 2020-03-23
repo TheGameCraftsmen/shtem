@@ -12,6 +12,7 @@ shtem.Player = function (){
     this.speed = 2;
     this.missiles = [];
     this.lastFireTick = 0;
+    this.hitpoint = 100;
 }
 
 shtem.Player.prototype ={
@@ -27,6 +28,11 @@ shtem.Player.prototype ={
             this.y -= Math.sin(this.angleRadian) * this.speed;
         }
     },    
+
+    setDamage : function(dmg){
+        this.hitpoint -= dmg;
+        this.hitpoint = this.hitpoint < 0 ? 0 : this.hitpoint;
+    },
 
     fire : function(){
         let d = new Date();
@@ -61,6 +67,8 @@ shtem.Player.prototype ={
             return;
         })
     },
+
+
 
     render : function(){
         var ctx = shtem.canvas.canvasTile.getContext("2d");
