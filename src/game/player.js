@@ -45,8 +45,20 @@ shtem.Player.prototype ={
         this.angleDegrees = this.angleRotation * -180/Math.PI + 90;
         this.angleRadian = this.angleDegrees * Math.PI / 180;
         this.move();
+        var missileToRemove = [];
         this.missiles.forEach(function(m){
             m.loop();
+            if (m.state === shtem.C.MISSILE_STATE_DESTROYED){
+                missileToRemove.push(m);
+            }
+        })
+        var _this = this;
+        missileToRemove.forEach(function(item){
+            const index = _this.missiles.indexOf(item);
+            if (index !== -1) {
+                _this.missiles.splice(index, 1);
+            }
+            return;
         })
     },
 

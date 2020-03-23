@@ -12,6 +12,9 @@ shtem.Missile = function (){
     this.speed = 5;
     this.stepX = 0;
     this.stepY = 0;
+    this.lifetime = 1000;
+    this.startlife = 0;
+    this.state = shtem.C.MISSILE_STATE_ALIVE;
 }
 
 shtem.Missile.prototype ={
@@ -29,6 +32,8 @@ shtem.Missile.prototype ={
         this.angleRadian = src.angleRadian;
         this.stepX = Math.cos(Math.abs(this.angleRadian)) * this.speed;
         this.stepY = -Math.sin(this.angleRadian) * this.speed;
+        let d = new Date();
+        this.startlife = d.getTime();
     },
 
     move : function(){
@@ -39,23 +44,33 @@ shtem.Missile.prototype ={
     },    
 
     loop : function(){
-        this.move();
+        if (this.state === shtem.C.MISSILE_STATE_ALIVE){
+            let d = new Date();
+            let tick = d.getTime();
+            if (tick - this.startlife > this.lifetime){
+                this.state = shtem.C.MISSILE_STATE_DESTROYED;
+            }else{
+                this.move();
+            }
+        }
     },
 
     render : function(){
-        var ctx = shtem.canvas.canvasTile.getContext("2d");
-        ctx.setTransform(1, 0, 0, 1, this.x - shtem.player.x + shtem.gameEngine.centerX, this.y - shtem.player.y + shtem.gameEngine.centerY);
-        ctx.rotate(this.angleRotation); 
-        ctx.drawImage(
-            this.spriteset,
-            9,
-            40,
-            11,
-            18,
-            -6,
-            -9,
-            11,
-            18);
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        if (this.state === shtem.C.MISSILE_STATE_ALIVE){
+            var ctx = shtem.canvas.canvasTile.getContext("2d");
+            ctx.setTransform(1, 0, 0, 1, this.x - shtem.player.x + shtem.gameEngine.centerX, this.y - shtem.player.y + shtem.gameEngine.centerY);
+            ctx.rotate(this.angleRotation); 
+            ctx.drawImage(
+                this.spriteset,
+                9,
+                40,
+                11,
+                18,
+                -6,
+                -9,
+                11,
+                18);
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+        }
     }
 };
