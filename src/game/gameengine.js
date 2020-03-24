@@ -10,6 +10,7 @@ shtem.GameEngine = function (){
     this.moveX = 0;
     this.moveY = 0;
     this.ennemies = [];
+    this.explosions = [];
 }
 
 shtem.GameEngine.prototype ={
@@ -23,6 +24,15 @@ shtem.GameEngine.prototype ={
       shtem.player.loop();
       
       shtem.player.render();
+      var expToRemove = [];
+      shtem.gameEngine.explosions.forEach(function(exp){
+          exp.loop();
+          exp.render();
+          if (exp.state === shtem.C.ITEM_STATE_DESTROYED){
+              expToRemove.push(exp);
+          }
+      })
+      removeItemArrayFromArray(expToRemove,shtem.gameEngine.explosions);
     },
 
     render : function(){

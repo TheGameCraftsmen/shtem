@@ -3,6 +3,6 @@
 var shtem = shtem || {};
 
 shtem.C = Object.freeze({
-  MISSILE_STATE_ALIVE : 0,
-  MISSILE_STATE_DESTROYED : 1,
+  ITEM_STATE_ALIVE : 0,
+  ITEM_STATE_DESTROYED : 1,
 });

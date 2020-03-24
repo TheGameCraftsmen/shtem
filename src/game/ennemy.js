@@ -53,28 +53,24 @@ shtem.Ennemy.prototype ={
             ){
                 m.state  = shtem.C.MISSILE_STATE_DESTROYED;
                 shtem.player.setDamage(_this.damage);
+                let exp = new shtem.Explosion();
+                exp.init(m.x,m.y);
+                shtem.gameEngine.explosions.push(exp);
             }
         });
     },
 
     loop : function(){
-        //this.move();
         this.fire();
         var missileToRemove = [];
         this.missiles.forEach(function(m){
             m.loop();
-            if (m.state === shtem.C.MISSILE_STATE_DESTROYED){
+            if (m.state === shtem.C.ITEM_STATE_DESTROYED){
                 missileToRemove.push(m);
             }
         })
-        var _this = this;
-        missileToRemove.forEach(function(item){
-            const index = _this.missiles.indexOf(item);
-            if (index !== -1) {
-                _this.missiles.splice(index, 1);
-            }
-            return;
-        })
+        
+        removeItemArrayFromArray(missileToRemove,this.missiles);
         this.missileCollisionToCharacter();
     },
 
@@ -82,7 +78,6 @@ shtem.Ennemy.prototype ={
         var ctx = shtem.canvas.canvasTile.getContext("2d");
         ctx.setTransform(1, 0, 0, 1, this.x - shtem.player.x + shtem.gameEngine.centerX, this.y - shtem.player.y + shtem.gameEngine.centerY);
         ctx.rotate(this.angleRotation); 
-        //ctx.drawImage(this.spriteset,-16, -16); 
         ctx.drawImage(
             this.spriteset,
             0,

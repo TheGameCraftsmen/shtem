@@ -14,7 +14,7 @@ shtem.Missile = function (){
     this.stepY = 0;
     this.lifetime = 1000;
     this.startlife = 0;
-    this.state = shtem.C.MISSILE_STATE_ALIVE;
+    this.state = shtem.C.ITEM_STATE_ALIVE;
 }
 
 shtem.Missile.prototype ={
@@ -44,11 +44,11 @@ shtem.Missile.prototype ={
     },    
 
     loop : function(){
-        if (this.state === shtem.C.MISSILE_STATE_ALIVE){
+        if (this.state === shtem.C.ITEM_STATE_ALIVE){
             let d = new Date();
             let tick = d.getTime();
             if (tick - this.startlife > this.lifetime){
-                this.state = shtem.C.MISSILE_STATE_DESTROYED;
+                this.state = shtem.C.ITEM_STATE_DESTROYED;
             }else{
                 this.move();
             }
@@ -56,7 +56,7 @@ shtem.Missile.prototype ={
     },
 
     render : function(){
-        if (this.state === shtem.C.MISSILE_STATE_ALIVE){
+        if (this.state === shtem.C.ITEM_STATE_ALIVE){
             var ctx = shtem.canvas.canvasTile.getContext("2d");
             ctx.setTransform(1, 0, 0, 1, this.x - shtem.player.x + shtem.gameEngine.centerX, this.y - shtem.player.y + shtem.gameEngine.centerY);
             ctx.rotate(this.angleRotation); 
