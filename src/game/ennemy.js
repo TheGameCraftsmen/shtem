@@ -51,7 +51,7 @@ shtem.Ennemy.prototype ={
                 (((shtem.player.y) < m.y && ((shtem.player.y+32) > m.y))
                    || ((shtem.player.y > (m.y ) && (shtem.player.y) < (m.y + 32))))
             ){
-                m.state  = shtem.C.MISSILE_STATE_DESTROYED;
+                m.state  = shtem.C.ITEM_STATE_DESTROYED;
                 shtem.player.setDamage(_this.damage);
                 let exp = new shtem.Explosion();
                 exp.init(m.x,m.y);
