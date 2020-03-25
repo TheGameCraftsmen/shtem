@@ -13,6 +13,7 @@ shtem.Player = function (){
     this.missiles = [];
     this.lastFireTick = 0;
     this.hitpoint = 100;
+    this.maxHitPoint = 100;
 }
 
 shtem.Player.prototype ={

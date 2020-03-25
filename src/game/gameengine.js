@@ -33,6 +33,8 @@ shtem.GameEngine.prototype ={
           }
       })
       removeItemArrayFromArray(expToRemove,shtem.gameEngine.explosions);
+
+      shtem.uiplayer.render();
     },
 
     render : function(){
@@ -68,6 +70,8 @@ shtem.GameEngine.prototype ={
         shtem.tileset = new shtem.Tileset();
         shtem.player = new shtem.Player ();
         shtem.player.init();
+        shtem.uiplayer = new shtem.UIPlayer();
+        shtem.uiplayer.init();
         let tempEnnemy = new shtem.Ennemy();
         tempEnnemy.init();
         this.ennemies.push(tempEnnemy);
