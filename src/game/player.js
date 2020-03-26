@@ -15,6 +15,7 @@ shtem.Player = function (){
     this.hitpoint = 100;
     this.maxHitPoint = 100;
     this.uiLifeGauge = null;
+    this.maxSpeed = 5;
 }
 
 shtem.Player.prototype ={
@@ -24,6 +25,17 @@ shtem.Player.prototype ={
         this.spriteset = shtem.tileset.get(this.sprite);
         this.uiLifeGauge = new shtem.UILifeGauge();
         this.uiLifeGauge.init(this);
+    },
+
+    speedChange : function(delta){
+        if (delta < 0){
+            this.speed -= 1;
+            this.speed = this.speed < 0 ? 0 : this.speed;
+        }else{
+            this.speed += 1;
+            this.speed = this.speed > this.maxSpeed ? this.maxSpeed : this.speed;
+        }
+
     },
 
     move : function(){

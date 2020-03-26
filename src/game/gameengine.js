@@ -66,6 +66,10 @@ shtem.GameEngine.prototype ={
         shtem.player.fire();
     },
 
+    mouseWheel : function(evt){
+        shtem.player.speedChange(evt.deltaY);
+    },
+
     init : function(){
         this.centerX = window.innerWidth / 2 -  this.tileSize / 2 ;
         this.centerY = window.innerHeight / 2 - this.tileSize / 2 - 70;
@@ -85,6 +89,7 @@ shtem.GameEngine.prototype ={
 
         shtem.canvas.canvasMouse.addEventListener("click",shtem.gameEngine.clickEvent);
         shtem.canvas.canvasMouse.addEventListener("mousemove",shtem.gameEngine.mouseMoveEvent);
+        shtem.canvas.canvasMouse.addEventListener("mousewheel",shtem.gameEngine.mouseWheel);
     },
 }
 
