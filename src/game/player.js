@@ -14,6 +14,7 @@ shtem.Player = function (){
     this.lastFireTick = 0;
     this.hitpoint = 100;
     this.maxHitPoint = 100;
+    this.uiLifeGauge = null;
 }
 
 shtem.Player.prototype ={
@@ -21,6 +22,8 @@ shtem.Player.prototype ={
         this.sprite = "assets/images/ships/mship1_32.png";
 
         this.spriteset = shtem.tileset.get(this.sprite);
+        this.uiLifeGauge = new shtem.UILifeGauge();
+        this.uiLifeGauge.init(this);
     },
 
     move : function(){
@@ -87,7 +90,7 @@ shtem.Player.prototype ={
             m.render();
         })
 
-        
+        this.uiLifeGauge.render(shtem.gameEngine.centerX, shtem.gameEngine.centerY);
         
         
     }

@@ -24,6 +24,8 @@ shtem.Ennemy.prototype ={
         this.angleDegrees = 180;
         this.angleRotation = (this.angleDegrees-90)/-180*Math.PI;
         this.angleRadian = this.angleDegrees * Math.PI / 180;
+        this.uiLifeGauge = new shtem.UILifeGauge();
+        this.uiLifeGauge.init(this);
     },
 
     move : function(){
@@ -98,5 +100,7 @@ shtem.Ennemy.prototype ={
         this.missiles.forEach(function(m){
             m.render();
         })
+
+        this.uiLifeGauge.render(this.x - shtem.player.x + shtem.gameEngine.centerX, this.y - shtem.player.y + shtem.gameEngine.centerY);
     }
 };
