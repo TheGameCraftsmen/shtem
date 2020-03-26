@@ -12,7 +12,9 @@ shtem.Ennemy = function (){
     this.speed = 2;
     this.missiles = [];
     this.lastFireTick = 0;
-    this.damage = 1;
+    this.hitpoint = 10;
+    this.maxHitPoint = 10;
+    this.state = shtem.C.ITEM_STATE_ALIVE;
 }
 
 shtem.Ennemy.prototype ={
@@ -42,17 +44,20 @@ shtem.Ennemy.prototype ={
         }
     },
 
+    setDamage : function(dmg){
+        this.hitpoint -= dmg;
+        this.hitpoint = this.hitpoint < 0 ? 0 : this.hitpoint;
+        if (this.hitpoint === 0){
+            this.state = shtem.C.ITEM_STATE_DESTROYED;
+        }
+    },
+
     missileCollisionToCharacter : function(){
         var _this = this;
         this.missiles.forEach(function(m){
-            if ((((shtem.player.x) < m.x && ((shtem.player.x+32) > m.x))
-                   || ((shtem.player.x > (m.x ) && (shtem.player.x) < (m.x + 32))))
-                && 
-                (((shtem.player.y) < m.y && ((shtem.player.y+32) > m.y))
-                   || ((shtem.player.y > (m.y ) && (shtem.player.y) < (m.y + 32))))
-            ){
+            if (boxCollision (shtem.player,m) === true){
                 m.state  = shtem.C.ITEM_STATE_DESTROYED;
-                shtem.player.setDamage(_this.damage);
+                shtem.player.setDamage(m.damage);
                 let exp = new shtem.Explosion();
                 exp.init(m.x,m.y);
                 shtem.gameEngine.explosions.push(exp);

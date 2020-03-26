@@ -17,10 +17,16 @@ shtem.GameEngine.prototype ={
     gameLoop: function (){
       shtem.canvas.clearCanvas();
       shtem.gameEngine.render();  
+      var arrayShipToRemove = [];
       shtem.gameEngine.ennemies.forEach(function (ennemy){
           ennemy.loop();
-          ennemy.render();
+          if (ennemy.state === shtem.C.ITEM_STATE_DESTROYED){
+              arrayShipToRemove.push(ennemy);
+          }else{
+            ennemy.render();
+          }
       })
+      removeItemArrayFromArray(arrayShipToRemove,shtem.gameEngine.ennemies);
       shtem.player.loop();
       
       shtem.player.render();
@@ -33,6 +39,8 @@ shtem.GameEngine.prototype ={
           }
       })
       removeItemArrayFromArray(expToRemove,shtem.gameEngine.explosions);
+
+
 
       shtem.uiplayer.render();
     },

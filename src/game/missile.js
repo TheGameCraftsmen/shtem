@@ -15,6 +15,7 @@ shtem.Missile = function (){
     this.lifetime = 1000;
     this.startlife = 0;
     this.state = shtem.C.ITEM_STATE_ALIVE;
+    this.damage = 1;
 }
 
 shtem.Missile.prototype ={
