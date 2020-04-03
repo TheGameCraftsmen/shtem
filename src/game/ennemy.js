@@ -41,7 +41,7 @@ shtem.Ennemy.prototype ={
         if (newTick - this.lastFireTick > 200){
             this.lastFireTick = newTick;
             let m = new shtem.Missile();
-            m.init(this);
+            m.init(shtem.C.WEAPON_SIMPLE_GREEN_BEAM,this);
             this.missiles.push(m);
         }
     },
