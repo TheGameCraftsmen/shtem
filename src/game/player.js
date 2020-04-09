@@ -91,7 +91,7 @@ shtem.Player.prototype ={
 
 
     render : function(){
-        var ctx = shtem.canvas.canvasTile.getContext("2d");
+        var ctx = shtem.canvas.canvasCreature.getContext("2d");
 
         ctx.setTransform(1, 0, 0, 1, shtem.gameEngine.centerX, shtem.gameEngine.centerY);
         ctx.rotate(this.angleRotation);        

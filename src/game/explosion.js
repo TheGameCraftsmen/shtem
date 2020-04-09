@@ -38,7 +38,7 @@ shtem.Explosion.prototype ={
 
     render : function(){
         if (this.state === shtem.C.ITEM_STATE_ALIVE){
-            var ctx = shtem.canvas.canvasTile.getContext("2d");
+            var ctx = shtem.canvas.canvasAnimation.getContext("2d");
             ctx.setTransform(1, 0, 0, 1, this.x - shtem.player.x + shtem.gameEngine.centerX, this.y - shtem.player.y + shtem.gameEngine.centerY);
             ctx.drawImage(
                 this.spriteset,
