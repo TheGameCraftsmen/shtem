@@ -15,6 +15,7 @@ shtem.Ennemy = function (){
     this.hitpoint = 10;
     this.maxHitPoint = 10;
     this.state = shtem.C.ITEM_STATE_ALIVE;
+    this.templateWeapon = shtem.C.WEAPON_SIMPLE_RED_BEAM;
 }
 
 shtem.Ennemy.prototype ={
@@ -38,10 +39,11 @@ shtem.Ennemy.prototype ={
     fire : function(){
         let d = new Date();
         let newTick = d.getTime();
-        if (newTick - this.lastFireTick > 200){
+        var src = shtem.weapons[this.templateWeapon];
+        if (newTick - this.lastFireTick > src.rythm){
             this.lastFireTick = newTick;
             let m = new shtem.Missile();
-            m.init(shtem.C.WEAPON_SIMPLE_GREEN_BEAM,this);
+            m.init(this.templateWeapon,this);
             this.missiles.push(m);
         }
     },

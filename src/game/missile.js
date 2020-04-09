@@ -17,6 +17,7 @@ shtem.Missile = function (){
     this.state = shtem.C.ITEM_STATE_ALIVE;
     this.damage = 0;
     this.idTemplate = 0;
+    this.rythm = 0;
 }
 
 shtem.Missile.prototype ={
@@ -28,6 +29,7 @@ shtem.Missile.prototype ={
         this.sprite = src.sprite;
         this.damage = src.damage;
         this.lifetime = src.lifetime;
+        this.rythm = src.rythm;
         this.tx = src.position.x;
         this.ty = src.position.y;
     },
@@ -73,14 +75,14 @@ shtem.Missile.prototype ={
             ctx.rotate(this.angleRotation); 
             ctx.drawImage(
                 this.spriteset,
-                9,
-                40,
-                11,
-                18,
+                this.tx,
+                this.ty,
+                this.sizeX,
+                this.sizeY,
                 -6,
                 -9,
-                11,
-                18);
+                this.sizeX,
+                this.sizeY);
             ctx.setTransform(1, 0, 0, 1, 0, 0);
         }
     }
