@@ -2,7 +2,7 @@
 var shtem = shtem || {};
 
 shtem.Player = function (){
-    this.x = 1000;
+    this.x = 1300;
     this.y = 1000;
     this.sprite = "";
     this.spriteset = null;
@@ -40,8 +40,18 @@ shtem.Player.prototype ={
 
     move : function(){
         if(! isNaN(this.angleRadian)){
-            this.x += Math.cos(Math.abs(this.angleRadian)) * this.speed;
-            this.y -= Math.sin(this.angleRadian) * this.speed;
+            let newX = this.x + Math.cos(Math.abs(this.angleRadian)) * this.speed;
+            let newY = this.y - Math.sin(this.angleRadian) * this.speed;
+            var collider = { "x" : newX, "y" : newY};
+            var hasCollided = false;
+            shtem.gameEngine.ennemies.forEach(function (ennemy){
+                hasCollided = hasCollided || boxCollision(collider,ennemy);
+                return;
+            })
+            if (! hasCollided){
+                this.x = newX;
+                this.y = newY;
+            }
         }
     },    
 
