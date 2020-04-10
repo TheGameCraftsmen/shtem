@@ -9,4 +9,7 @@ shtem.C = Object.freeze({
   //WEAPONS : 
   WEAPON_SIMPLE_GREEN_BEAM : 1,
   WEAPON_SIMPLE_RED_BEAM : 2,
+
+  //SHIPS :
+  SHIP_PLAYER_1 : 1,
 });

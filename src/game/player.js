@@ -9,19 +9,30 @@ shtem.Player = function (){
     this.angleRotation;
     this.angleDegrees = 0;
     this.angleRadian = 0;
-    this.speed = 2;
+    this.speed = 0;
     this.missiles = [];
     this.lastFireTick = 0;
-    this.hitpoint = 100;
-    this.maxHitPoint = 100;
+    this.hitpoint = 0;
+    this.maxHitPoint = 0;
     this.uiLifeGauge = null;
-    this.maxSpeed = 5;
+    this.maxSpeed = 0;
+    this.idTemplate = shtem.C.SHIP_PLAYER_1;
+    this.idWeapon = 0;
 }
 
-shtem.Player.prototype ={
-    init : function (){
-        this.sprite = "assets/images/ships/mship1_32.png";
 
+shtem.Player.prototype ={
+    loadFromTemplate : function(){
+        var src = shtem.ships[this.idTemplate];
+        this.sprite = src.sprite;
+        this.maxSpeed = src.speed;
+        this.maxHitPoint = src.hitpoint;
+        this.hitpoint = src.hitpoint;
+        this.idWeapon = src.weaponid;
+    },
+
+    init : function (){
+        this.loadFromTemplate();
         this.spriteset = shtem.tileset.get(this.sprite);
         this.uiLifeGauge = new shtem.UILifeGauge();
         this.uiLifeGauge.init(this);
@@ -63,10 +74,11 @@ shtem.Player.prototype ={
     fire : function(){
         let d = new Date();
         let newTick = d.getTime();
-        if (newTick - this.lastFireTick > 200){
+        var src = shtem.weapons[this.idWeapon];
+        if (newTick - this.lastFireTick > src.rythm){
             this.lastFireTick = newTick;
             let m = new shtem.Missile();
-            m.init(shtem.C.WEAPON_SIMPLE_GREEN_BEAM,this);
+            m.init(this.idWeapon,this);
             this.missiles.push(m);
         }
         
