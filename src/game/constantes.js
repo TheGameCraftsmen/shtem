@@ -18,4 +18,5 @@ shtem.C = Object.freeze({
 
   //BONUS :
   BONUS_UPGRADE_SHOOT : 1,
+  BONUS_HEAL : 2,
 });

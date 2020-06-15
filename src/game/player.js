@@ -103,23 +103,6 @@ shtem.Player.prototype ={
                     m.init(this.idWeapon,position);
                     this.missiles.push(m);    
                 }
-                /*
-                let position = {"x" : this.x + stepX, 
-                            "y" : this.y + stepY,
-                            "angleDegrees" : this.angleDegrees,
-                            "angleRotation" : this.angleRotation,
-                            "angleRadian" : this.angleRadian};
-                let m = new shtem.Missile();
-                m.init(this.idWeapon,position);
-                this.missiles.push(m);
-                m = new shtem.Missile();
-                position = {"x" : this.x - stepX, 
-                            "y" : this.y - stepY,
-                            "angleDegrees" : this.angleDegrees,
-                            "angleRotation" : this.angleRotation,
-                            "angleRadian" : this.angleRadian};
-                m.init(this.idWeapon,position);
-                this.missiles.push(m);*/
             }else{
                 let m = new shtem.Missile();
                 let position = {"x" : this.x, 
@@ -136,8 +119,16 @@ shtem.Player.prototype ={
     },
 
     takeBonus : function(bonus){
-        let srcActualWeapon = shtem.weapons[this.idWeapon];
-        this.idWeapon = srcActualWeapon.upgrade;        
+        if (bonus.idTemplate == shtem.C.BONUS_UPGRADE_SHOOT){
+            let srcActualWeapon = shtem.weapons[this.idWeapon];
+            this.idWeapon = srcActualWeapon.upgrade;        
+        }else{
+            if (bonus.idTemplate == shtem.C.BONUS_HEAL){
+                let hpGain = Math.floor(this.maxHitPoint / 3);
+                this.hitpoint += hpGain;
+                this.hitpoint = this.hitpoint > this.maxHitPoint ? this.maxHitPoint : this.hitpoint;
+            }
+        }
     },
 
     loop : function(){
