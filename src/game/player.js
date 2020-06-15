@@ -78,13 +78,32 @@ shtem.Player.prototype ={
         if (newTick - this.lastFireTick > src.rythm){
             this.lastFireTick = newTick;
             
-            if (shtem.weapons[this.idWeapon].number == 2){
-                let stepX = Math.sin(Math.abs(this.angleRadian)) * 5;
-                let stepY = Math.cos(this.angleRadian) * 5;
+            if (shtem.weapons[this.idWeapon].number > 1){
+                let stepX = Math.sin(Math.abs(this.angleRadian)) * shtem.C.WEAPON_SPACE_BETWEEN_GREEN_BEAM;
+                let stepY = Math.cos(this.angleRadian) * shtem.C.WEAPON_SPACE_BETWEEN_GREEN_BEAM;
                 if (this.angleRadian < 0){
                     stepY = -stepY;
                 }
-                
+                let decalageNb = shtem.weapons[this.idWeapon].number / 2;
+                for (let i = 1; i<= decalageNb;i++){
+                    let position = {"x" : this.x + stepX*i, 
+                            "y" : this.y + stepY*i,
+                            "angleDegrees" : this.angleDegrees,
+                            "angleRotation" : this.angleRotation,
+                            "angleRadian" : this.angleRadian};
+                    let m = new shtem.Missile();
+                    m.init(this.idWeapon,position);
+                    this.missiles.push(m);
+                    m = new shtem.Missile();
+                    position = {"x" : this.x - stepX*i, 
+                                "y" : this.y - stepY*i,
+                                "angleDegrees" : this.angleDegrees,
+                                "angleRotation" : this.angleRotation,
+                                "angleRadian" : this.angleRadian};
+                    m.init(this.idWeapon,position);
+                    this.missiles.push(m);    
+                }
+                /*
                 let position = {"x" : this.x + stepX, 
                             "y" : this.y + stepY,
                             "angleDegrees" : this.angleDegrees,
@@ -100,8 +119,7 @@ shtem.Player.prototype ={
                             "angleRotation" : this.angleRotation,
                             "angleRadian" : this.angleRadian};
                 m.init(this.idWeapon,position);
-                this.missiles.push(m);
-                console.log(this.angleRadian);    
+                this.missiles.push(m);*/
             }else{
                 let m = new shtem.Missile();
                 let position = {"x" : this.x, 

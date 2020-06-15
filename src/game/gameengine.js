@@ -95,6 +95,9 @@ shtem.GameEngine.prototype ={
         let bonus = new shtem.Bonus();
         bonus.init(shtem.C.BONUS_UPGRADE_SHOOT, 800, 800);
         this.bonus.push(bonus);
+        bonus = new shtem.Bonus();
+        bonus.init(shtem.C.BONUS_UPGRADE_SHOOT, 600, 600);
+        this.bonus.push(bonus);
         
         let tempEnnemy = new shtem.Ennemy();
         tempEnnemy.init();
