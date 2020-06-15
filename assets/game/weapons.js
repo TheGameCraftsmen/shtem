@@ -13,7 +13,7 @@ shtem.weapons = {
         "damage" : 1,
         "rythm" : 200,
         "number" : 1,
-        "upgrade" : shtem.C.WEAPON_SIMPLE_RED_BEAM,
+        "upgrade" : shtem.C.WEAPON_DOUBLE_GREEN_BEAM,
     },
     2 : {
         "id" : shtem.C.WEAPON_SIMPLE_RED_BEAM,

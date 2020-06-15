@@ -77,9 +77,42 @@ shtem.Player.prototype ={
         var src = shtem.weapons[this.idWeapon];
         if (newTick - this.lastFireTick > src.rythm){
             this.lastFireTick = newTick;
-            let m = new shtem.Missile();
-            m.init(this.idWeapon,this);
-            this.missiles.push(m);
+            
+            if (shtem.weapons[this.idWeapon].number == 2){
+                let stepX = Math.sin(Math.abs(this.angleRadian)) * 5;
+                let stepY = Math.cos(this.angleRadian) * 5;
+                if (this.angleRadian < 0){
+                    stepY = -stepY;
+                }
+                
+                let position = {"x" : this.x + stepX, 
+                            "y" : this.y + stepY,
+                            "angleDegrees" : this.angleDegrees,
+                            "angleRotation" : this.angleRotation,
+                            "angleRadian" : this.angleRadian};
+                let m = new shtem.Missile();
+                m.init(this.idWeapon,position);
+                this.missiles.push(m);
+                m = new shtem.Missile();
+                position = {"x" : this.x - stepX, 
+                            "y" : this.y - stepY,
+                            "angleDegrees" : this.angleDegrees,
+                            "angleRotation" : this.angleRotation,
+                            "angleRadian" : this.angleRadian};
+                m.init(this.idWeapon,position);
+                this.missiles.push(m);
+                console.log(this.angleRadian);    
+            }else{
+                let m = new shtem.Missile();
+                let position = {"x" : this.x, 
+                            "y" : this.y,
+                            "angleDegrees" : this.angleDegrees,
+                            "angleRotation" : this.angleRotation,
+                            "angleRadian" : this.angleRadian};
+                m.init(this.idWeapon,position);
+                this.missiles.push(m);
+            }
+            
         }
         
     },
