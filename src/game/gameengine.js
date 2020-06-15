@@ -11,6 +11,7 @@ shtem.GameEngine = function (){
     this.moveY = 0;
     this.ennemies = [];
     this.explosions = [];
+    this.bonus = [];
 }
 
 shtem.GameEngine.prototype ={
@@ -30,6 +31,17 @@ shtem.GameEngine.prototype ={
       shtem.player.loop();
       
       shtem.player.render();
+
+      var bonusToRemove = [];
+      shtem.gameEngine.bonus.forEach(function(bonus){
+          bonus.loop();
+          bonus.render();
+          if (bonus.state === shtem.C.ITEM_STATE_DESTROYED){
+              bonusToRemove.push(bonus);
+          }
+      })
+      removeItemArrayFromArray(bonusToRemove,shtem.gameEngine.bonus);
+
       var expToRemove = [];
       shtem.gameEngine.explosions.forEach(function(exp){
           exp.loop();
@@ -79,6 +91,10 @@ shtem.GameEngine.prototype ={
         shtem.tileset = new shtem.Tileset();
         shtem.player = new shtem.Player ();
         shtem.player.init();
+
+        let bonus = new shtem.Bonus();
+        bonus.init(shtem.C.BONUS_MORE_SHOOT, 800, 800);
+        this.bonus.push(bonus);
         
         let tempEnnemy = new shtem.Ennemy();
         tempEnnemy.init();

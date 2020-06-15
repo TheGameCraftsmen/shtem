@@ -12,4 +12,7 @@ shtem.C = Object.freeze({
 
   //SHIPS :
   SHIP_PLAYER_1 : 1,
+
+  //BONUS :
+  BONUS_MORE_SHOOT : 1,
 });
