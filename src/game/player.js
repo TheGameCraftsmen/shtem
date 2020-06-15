@@ -84,11 +84,17 @@ shtem.Player.prototype ={
         
     },
 
+    takeBonus : function(bonus){
+        let srcActualWeapon = shtem.weapons[this.idWeapon];
+        this.idWeapon = srcActualWeapon.upgrade;        
+    },
+
     loop : function(){
         this.angleRotation = Math.atan2(shtem.gameEngine.mouseY - shtem.gameEngine.centerY, shtem.gameEngine.mouseX - shtem.gameEngine.centerX) + Math.PI / 2;
         this.angleDegrees = this.angleRotation * -180/Math.PI + 90;
         this.angleRadian = this.angleDegrees * Math.PI / 180;
         this.move();
+        var _this = this;
         var missileToRemove = [];
         this.missiles.forEach(function(m){
             m.loop();
@@ -108,9 +114,14 @@ shtem.Player.prototype ={
             }
         })
         removeItemArrayFromArray(missileToRemove,this.missiles);
+
+        shtem.gameEngine.bonus.forEach(function(bonus){
+            if (boxCollision(_this,bonus) === true){
+                bonus.state = shtem.C.ITEM_STATE_DESTROYED;
+                _this.takeBonus(bonus);
+            }
+        });
     },
-
-
 
     render : function(){
         var ctx = shtem.canvas.canvasCreature.getContext("2d");

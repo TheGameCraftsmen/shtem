@@ -18,6 +18,7 @@ shtem.Missile = function (){
     this.damage = 0;
     this.idTemplate = 0;
     this.rythm = 0;
+    this.number = 0;
 }
 
 shtem.Missile.prototype ={
@@ -32,6 +33,8 @@ shtem.Missile.prototype ={
         this.rythm = src.rythm;
         this.tx = src.position.x;
         this.ty = src.position.y;
+        this.number = src.number;
+        this.upgrade = src.upgrade;
     },
 
     init : function (templateId, src){
