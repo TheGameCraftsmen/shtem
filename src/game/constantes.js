@@ -21,6 +21,8 @@ shtem.C = Object.freeze({
   BONUS_HEAL : 2,
 
   ENNEMY_TURREL_1 : 1,
+  ENNEMY_SHIP_1 : 1,
 
   ENNEMY_TYPE_TURREL : 1,
+  ENNEMY_TYPE_SHIP : 2,
 });

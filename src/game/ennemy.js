@@ -4,6 +4,8 @@ var shtem = shtem || {};
 shtem.Ennemy = function (){
     this.x = 1000;
     this.y = 1000;
+    this.sizeX = 0;
+    this.sizeY = 0;
     this.sprite = "";
     this.spriteset = null;
     this.angleRotation;
@@ -18,9 +20,14 @@ shtem.Ennemy = function (){
     this.templateWeapon = shtem.C.WEAPON_SIMPLE_RED_BEAM;
     this.idTemplate = 1;
     this.bonusPrct = 0;
+    this.ennemyType = 0;
 }
 
 shtem.Ennemy.prototype ={
+    loadFromSpecificTemplateShip : function(src){
+        this.speed = src.speed;
+    },
+
     loadFromTemplate : function(){
         let src = shtem.ennemy[this.idTemplate];
         this.sprite = src.sprite;
@@ -28,11 +35,17 @@ shtem.Ennemy.prototype ={
         this.hitpoint = src.hitpoint;
         this.templateWeapon = src.weaponid;
         this.bonusPrct = src.bonusprcent;
+        this.sizeX = src.size.x;
+        this.sizeY = src.size.y;
+        this.ennemyType = src.ennemytype;
+        if (this.ennemyType === shtem.C.ENNEMY_TYPE_SHIP){
+            this.loadFromSpecificTemplateShip(src);
+        }
     },
 
     getBonus : function(){
         let val = Math.random() * 100;
-        if (val <= 100 ){
+        if (val <= this.bonusPrct ){
             let bonus = new shtem.Bonus();
             bonus.init(shtem.C.BONUS_UPGRADE_SHOOT,this.x,this.y);
             return bonus;
@@ -53,8 +66,15 @@ shtem.Ennemy.prototype ={
 
     move : function(){
         if(! isNaN(this.angleRadian)){
-            this.x += Math.cos(Math.abs(this.angleRadian)) * this.speed;
-            this.y -= Math.sin(this.angleRadian) * this.speed;
+            let newX = this.x + Math.cos(Math.abs(this.angleRadian)) * this.speed;
+            let newY = this.y - Math.sin(this.angleRadian) * this.speed;
+            var collider = { "x" : newX, "y" : newY};
+            let hasCollided = boxCollision(collider,shtem.player);
+
+            if (! hasCollided){
+                this.x = newX;
+                this.y = newY;
+            }
         }
     },    
 
@@ -109,9 +129,23 @@ shtem.Ennemy.prototype ={
         removeItemArrayFromArray(missileToRemove,this.missiles);
     },
 
+    lookAtPlayer : function(){
+        this.angleRotation = Math.atan2( shtem.player.y - this.y, shtem.player.x - this.x) + Math.PI / 2;
+        this.angleDegrees = this.angleRotation * -180/Math.PI + 90;
+        this.angleRadian = this.angleDegrees * Math.PI / 180;
+    },
+
     loop : function(){
         this.fire();
-        this.rotate();
+        if (this.ennemyType === shtem.C.ENNEMY_TYPE_TURREL){
+            this.rotate();
+        }else{
+            if (this.ennemyType === shtem.C.ENNEMY_TYPE_SHIP){
+                this.lookAtPlayer();
+                this.move();
+            }
+        }
+        
         this.loopMissile();
         this.missileCollisionToCharacter();
 
@@ -125,8 +159,8 @@ shtem.Ennemy.prototype ={
             this.spriteset,
             0,
             0,
-            192,
-            192,
+            this.sizeX,
+            this.sizeY,
             -16,
             -16,
             32,
