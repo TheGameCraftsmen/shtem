@@ -69,8 +69,13 @@ shtem.Ennemy.prototype ={
         });
     },
 
-    loop : function(){
-        this.fire();
+    rotate : function(){
+        this.angleDegrees -= 1;
+        this.angleRotation = (this.angleDegrees-90)/-180*Math.PI;
+        this.angleRadian = this.angleDegrees * Math.PI / 180;
+    },
+
+    loopMissile : function(){
         var missileToRemove = [];
         this.missiles.forEach(function(m){
             m.loop();
@@ -80,7 +85,14 @@ shtem.Ennemy.prototype ={
         })
         
         removeItemArrayFromArray(missileToRemove,this.missiles);
+    },
+
+    loop : function(){
+        this.fire();
+        this.rotate();
+        this.loopMissile();
         this.missileCollisionToCharacter();
+
     },
 
     render : function(){
