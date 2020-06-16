@@ -23,10 +23,15 @@ shtem.GameEngine.prototype ={
           ennemy.loop();
           if (ennemy.state === shtem.C.ITEM_STATE_DESTROYED){
               arrayShipToRemove.push(ennemy);
+              let bonus = ennemy.getBonus();
+              if (bonus !== null){
+                  shtem.gameEngine.bonus.push(bonus);
+              }
           }else{
             ennemy.render();
           }
       })
+
       removeItemArrayFromArray(arrayShipToRemove,shtem.gameEngine.ennemies);
       shtem.player.loop();
       
@@ -93,7 +98,7 @@ shtem.GameEngine.prototype ={
         shtem.player.init();
         
         let tempEnnemy = new shtem.Ennemy();
-        tempEnnemy.init();
+        tempEnnemy.init(shtem.C.ENNEMY_TURREL_1);
         this.ennemies.push(tempEnnemy);
         
         this.imgName = "assets/images/background/other_back6.png";

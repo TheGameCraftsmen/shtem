@@ -16,11 +16,33 @@ shtem.Ennemy = function (){
     this.maxHitPoint = 10;
     this.state = shtem.C.ITEM_STATE_ALIVE;
     this.templateWeapon = shtem.C.WEAPON_SIMPLE_RED_BEAM;
+    this.idTemplate = 1;
+    this.bonusPrct = 0;
 }
 
 shtem.Ennemy.prototype ={
-    init : function (){
-        this.sprite = "assets/images/ships/turret.png";
+    loadFromTemplate : function(){
+        let src = shtem.ennemy[this.idTemplate];
+        this.sprite = src.sprite;
+        this.maxHitPoint = src.hitpoint;
+        this.hitpoint = src.hitpoint;
+        this.templateWeapon = src.weaponid;
+        this.bonusPrct = src.bonusprcent;
+    },
+
+    getBonus : function(){
+        let val = Math.random() * 100;
+        if (val <= 100 ){
+            let bonus = new shtem.Bonus();
+            bonus.init(shtem.C.BONUS_UPGRADE_SHOOT,this.x,this.y);
+            return bonus;
+        }
+        return null;
+    },
+
+    init : function (templateId){
+        this.idTemplate = templateId;
+        this.loadFromTemplate();
         this.spriteset = shtem.tileset.get(this.sprite);
         this.angleDegrees = 180;
         this.angleRotation = (this.angleDegrees-90)/-180*Math.PI;
