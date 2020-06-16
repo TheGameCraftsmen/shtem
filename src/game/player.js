@@ -130,13 +130,8 @@ shtem.Player.prototype ={
             }
         }
     },
-
-    loop : function(){
-        this.angleRotation = Math.atan2(shtem.gameEngine.mouseY - shtem.gameEngine.centerY, shtem.gameEngine.mouseX - shtem.gameEngine.centerX) + Math.PI / 2;
-        this.angleDegrees = this.angleRotation * -180/Math.PI + 90;
-        this.angleRadian = this.angleDegrees * Math.PI / 180;
-        this.move();
-        var _this = this;
+    
+    missileLoop : function(){
         var missileToRemove = [];
         this.missiles.forEach(function(m){
             m.loop();
@@ -156,13 +151,26 @@ shtem.Player.prototype ={
             }
         })
         removeItemArrayFromArray(missileToRemove,this.missiles);
+    },
 
+    bonusLoop : function(){
+        var _this = this;
         shtem.gameEngine.bonus.forEach(function(bonus){
             if (boxCollision(_this,bonus) === true){
                 bonus.state = shtem.C.ITEM_STATE_DESTROYED;
                 _this.takeBonus(bonus);
             }
         });
+    },
+
+    loop : function(){
+        this.angleRotation = Math.atan2(shtem.gameEngine.mouseY - shtem.gameEngine.centerY, shtem.gameEngine.mouseX - shtem.gameEngine.centerX) + Math.PI / 2;
+        this.angleDegrees = this.angleRotation * -180/Math.PI + 90;
+        this.angleRadian = this.angleDegrees * Math.PI / 180;
+        this.move();
+        this.missileLoop();
+        this.bonusLoop();
+        
     },
 
     render : function(){

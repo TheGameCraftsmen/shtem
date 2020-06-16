@@ -91,13 +91,6 @@ shtem.GameEngine.prototype ={
         shtem.tileset = new shtem.Tileset();
         shtem.player = new shtem.Player ();
         shtem.player.init();
-
-        let bonus = new shtem.Bonus();
-        bonus.init(shtem.C.BONUS_HEAL, 800, 800);
-        this.bonus.push(bonus);
-        bonus = new shtem.Bonus();
-        bonus.init(shtem.C.BONUS_UPGRADE_SHOOT, 600, 600);
-        this.bonus.push(bonus);
         
         let tempEnnemy = new shtem.Ennemy();
         tempEnnemy.init();
