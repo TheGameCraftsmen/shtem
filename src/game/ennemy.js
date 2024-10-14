@@ -70,7 +70,12 @@ shtem.Ennemy.prototype ={
             let newY = this.y - Math.sin(this.angleRadian) * this.speed;
             var collider = { "x" : newX, "y" : newY};
             let hasCollided = boxCollision(collider,shtem.player);
-
+            if (! hasCollided){
+                shtem.gameEngine.meteors.forEach(function (meteor){
+                    hasCollided = hasCollided || boxCollision(collider,meteor);
+                    return;
+                })
+            }
             if (! hasCollided){
                 this.x = newX;
                 this.y = newY;
@@ -85,7 +90,7 @@ shtem.Ennemy.prototype ={
         if (newTick - this.lastFireTick > src.rythm){
             this.lastFireTick = newTick;
             let m = new shtem.Missile();
-            m.init(this.templateWeapon,this);
+            m.init(this.templateWeapon,this,shtem.C.OWNER_MISSILE_ENNEMY);
             this.missiles.push(m);
         }
     },
@@ -98,18 +103,18 @@ shtem.Ennemy.prototype ={
         }
     },
 
-    missileCollisionToCharacter : function(){
-        let _this = this;
-        this.missiles.forEach(function(m){
-            if (boxCollision (shtem.player,m) === true){
-                m.state  = shtem.C.ITEM_STATE_DESTROYED;
-                shtem.player.setDamage(m.damage);
-                let exp = new shtem.Explosion();
-                exp.init(m.x,m.y);
-                shtem.gameEngine.explosions.push(exp);
-            }
-        });
-    },
+    // missileCollisionToCharacter : function(){
+    //     let _this = this;
+    //     this.missiles.forEach(function(m){
+    //         if (boxCollision (shtem.player,m) === true){
+    //             m.state  = shtem.C.ITEM_STATE_DESTROYED;
+    //             shtem.player.setDamage(m.damage);
+    //             let exp = new shtem.Explosion();
+    //             exp.init(m.x,m.y);
+    //             shtem.gameEngine.explosions.push(exp);
+    //         }
+    //     });
+    // },
 
     rotate : function(){
         this.angleDegrees -= 1;
@@ -145,10 +150,7 @@ shtem.Ennemy.prototype ={
                 this.move();
             }
         }
-        
         this.loopMissile();
-        this.missileCollisionToCharacter();
-
     },
 
     render : function(){

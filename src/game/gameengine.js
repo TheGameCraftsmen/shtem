@@ -105,10 +105,11 @@ shtem.GameEngine.prototype ={
         tempMeteor.init(shtem.C.METEOR_1);
         this.meteors.push(tempMeteor);
         
-        //let tempEnnemy = new shtem.Ennemy();
-        //tempEnnemy.init(shtem.C.ENNEMY_TURREL_1);
-        //tempEnnemy.init(2);
-        //this.ennemies.push(tempEnnemy);
+        let tempEnnemy = new shtem.Ennemy();
+        tempEnnemy.init(shtem.C.ENNEMY_TURREL_1);
+        tempEnnemy.x = 800;
+        // tempEnnemy.init(2);
+        this.ennemies.push(tempEnnemy);
         
         this.imgName = "assets/images/background/other_back6.png";
         this.img = shtem.tileset.get(this.imgName);

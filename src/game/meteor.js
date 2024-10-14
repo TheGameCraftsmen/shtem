@@ -8,9 +8,6 @@ shtem.Meteor = function (){
     this.sizeY = 0;
     this.sprite = "";
     this.spriteset = null;
-    this.angleRotation = 0;
-    this.angleDegrees = 0;
-    this.angleRadian = 0;
     this.speed = 0;
     this.idTemplate = 1;
 

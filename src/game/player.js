@@ -61,7 +61,7 @@ shtem.Player.prototype ={
             })
             if (! hasCollided){
                 shtem.gameEngine.meteors.forEach(function (meteor){
-                hasCollided = hasCollided || boxCollision(collider,meteor);
+                    hasCollided = hasCollided || boxCollision(collider,meteor);
                     return;
                 })
             }
@@ -98,7 +98,7 @@ shtem.Player.prototype ={
                             "angleRotation" : this.angleRotation,
                             "angleRadian" : this.angleRadian};
                     let m = new shtem.Missile();
-                    m.init(this.idWeapon,position);
+                    m.init(this.idWeapon,position,shtem.C.OWNER_MISSILE_PLAYER);
                     this.missiles.push(m);
                     m = new shtem.Missile();
                     position = {"x" : this.x - stepX*i, 
@@ -106,7 +106,7 @@ shtem.Player.prototype ={
                                 "angleDegrees" : this.angleDegrees,
                                 "angleRotation" : this.angleRotation,
                                 "angleRadian" : this.angleRadian};
-                    m.init(this.idWeapon,position);
+                    m.init(this.idWeapon,position,shtem.C.OWNER_MISSILE_PLAYER);
                     this.missiles.push(m);    
                 }
             }else{
@@ -116,7 +116,7 @@ shtem.Player.prototype ={
                             "angleDegrees" : this.angleDegrees,
                             "angleRotation" : this.angleRotation,
                             "angleRadian" : this.angleRadian};
-                m.init(this.idWeapon,position);
+                m.init(this.idWeapon,this,shtem.C.OWNER_MISSILE_PLAYER);
                 this.missiles.push(m);
             }
             

@@ -19,11 +19,12 @@ shtem.Missile = function (){
     this.idTemplate = 0;
     this.rythm = 0;
     this.number = 0;
+    this.owner = 0;
 }
 
 shtem.Missile.prototype ={
     loadFromTemplate : function(){
-        var src = shtem.weapons[this.idTemplate];
+        let src = shtem.weapons[this.idTemplate];
         this.sizeX = src.size.x;
         this.sizeY = src.size.y;
         this.speed = src.speed;
@@ -37,8 +38,9 @@ shtem.Missile.prototype ={
         this.upgrade = src.upgrade;
     },
 
-    init : function (templateId, src){
+    init : function (templateId, src, owner){
         this.idTemplate = templateId;
+        this.owner = owner;
         this.loadFromTemplate();
         this.x = src.x;
         this.y = src.y;
@@ -61,13 +63,22 @@ shtem.Missile.prototype ={
 
     loopCollide : function(){
         let _this = this;
-        shtem.gameEngine.ennemies.forEach(function(ennemy){
-            if (boxCollision(_this,ennemy) === true){
-                _this.state = shtem.C.ITEM_STATE_DESTROYED;
-                ennemy.setDamage(_this.damage);
+        if (this.owner === shtem.C.OWNER_MISSILE_PLAYER){
+            shtem.gameEngine.ennemies.forEach(function(ennemy){
+                if (boxCollision(_this,ennemy) === true){
+                    _this.state = shtem.C.ITEM_STATE_DESTROYED;
+                    ennemy.setDamage(_this.damage);
+                }
+            });
+        }else{
+            if (boxCollision (shtem.player,this) === true){
+                this.state  = shtem.C.ITEM_STATE_DESTROYED;
+                shtem.player.setDamage(m.damage);
+                let exp = new shtem.Explosion();
+                exp.init(this.x,this.y);
+                shtem.gameEngine.explosions.push(exp);
             }
-        });
-        console.log("rare");
+        }
         if (this.state !== shtem.C.ITEM_STATE_DESTROYED){
             shtem.gameEngine.meteors.forEach(function(meteor){
                 if (boxCollision(_this,meteor) === true){
