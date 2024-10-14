@@ -73,7 +73,7 @@ shtem.Missile.prototype ={
         }else{
             if (boxCollision (shtem.player,this) === true){
                 this.state  = shtem.C.ITEM_STATE_DESTROYED;
-                shtem.player.setDamage(m.damage);
+                shtem.player.setDamage(this.damage);
                 let exp = new shtem.Explosion();
                 exp.init(this.x,this.y);
                 shtem.gameEngine.explosions.push(exp);

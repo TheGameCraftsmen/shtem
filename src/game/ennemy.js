@@ -103,19 +103,6 @@ shtem.Ennemy.prototype ={
         }
     },
 
-    // missileCollisionToCharacter : function(){
-    //     let _this = this;
-    //     this.missiles.forEach(function(m){
-    //         if (boxCollision (shtem.player,m) === true){
-    //             m.state  = shtem.C.ITEM_STATE_DESTROYED;
-    //             shtem.player.setDamage(m.damage);
-    //             let exp = new shtem.Explosion();
-    //             exp.init(m.x,m.y);
-    //             shtem.gameEngine.explosions.push(exp);
-    //         }
-    //     });
-    // },
-
     rotate : function(){
         this.angleDegrees -= 1;
         this.angleRotation = (this.angleDegrees-90)/-180*Math.PI;

@@ -108,7 +108,11 @@ shtem.GameEngine.prototype ={
         let tempEnnemy = new shtem.Ennemy();
         tempEnnemy.init(shtem.C.ENNEMY_TURREL_1);
         tempEnnemy.x = 800;
-        // tempEnnemy.init(2);
+        this.ennemies.push(tempEnnemy);
+        
+        tempEnnemy = new shtem.Ennemy();
+        tempEnnemy.y = 800;
+        tempEnnemy.init(2);
         this.ennemies.push(tempEnnemy);
         
         this.imgName = "assets/images/background/other_back6.png";
