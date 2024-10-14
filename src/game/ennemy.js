@@ -8,7 +8,7 @@ shtem.Ennemy = function (){
     this.sizeY = 0;
     this.sprite = "";
     this.spriteset = null;
-    this.angleRotation;
+    this.angleRotation = 0;
     this.angleDegrees = 0;
     this.angleRadian = 0;
     this.speed = 2;
@@ -99,7 +99,7 @@ shtem.Ennemy.prototype ={
     },
 
     missileCollisionToCharacter : function(){
-        var _this = this;
+        let _this = this;
         this.missiles.forEach(function(m){
             if (boxCollision (shtem.player,m) === true){
                 m.state  = shtem.C.ITEM_STATE_DESTROYED;

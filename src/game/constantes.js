@@ -13,6 +13,9 @@ shtem.C = Object.freeze({
   WEAPON_FOUR_GREEN_BEAM : 4,
   WEAPON_SPACE_BETWEEN_GREEN_BEAM : 5,
 
+  // METEOR
+  METEOR_1 : 1,
+
   //SHIPS :
   SHIP_PLAYER_1 : 1,
 

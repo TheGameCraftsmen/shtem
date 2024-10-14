@@ -60,6 +60,12 @@ shtem.Player.prototype ={
                 return;
             })
             if (! hasCollided){
+                shtem.gameEngine.meteors.forEach(function (meteor){
+                hasCollided = hasCollided || boxCollision(collider,meteor);
+                    return;
+                })
+            }
+            if (! hasCollided){
                 this.x = newX;
                 this.y = newY;
             }

@@ -12,13 +12,14 @@ shtem.GameEngine = function (){
     this.ennemies = [];
     this.explosions = [];
     this.bonus = [];
+    this.meteors = [];
 }
 
 shtem.GameEngine.prototype ={
     gameLoop: function (){
       shtem.canvas.clearCanvas();
       shtem.gameEngine.render();  
-      var arrayShipToRemove = [];
+      let arrayShipToRemove = [];
       shtem.gameEngine.ennemies.forEach(function (ennemy){
           ennemy.loop();
           if (ennemy.state === shtem.C.ITEM_STATE_DESTROYED){
@@ -37,7 +38,11 @@ shtem.GameEngine.prototype ={
       
       shtem.player.render();
 
-      var bonusToRemove = [];
+      shtem.gameEngine.meteors.forEach(function(meteor){
+        meteor.render();
+      })
+
+      let bonusToRemove = [];
       shtem.gameEngine.bonus.forEach(function(bonus){
           bonus.loop();
           bonus.render();
@@ -47,7 +52,7 @@ shtem.GameEngine.prototype ={
       })
       removeItemArrayFromArray(bonusToRemove,shtem.gameEngine.bonus);
 
-      var expToRemove = [];
+      let expToRemove = [];
       shtem.gameEngine.explosions.forEach(function(exp){
           exp.loop();
           exp.render();
@@ -60,7 +65,7 @@ shtem.GameEngine.prototype ={
     },
 
     render : function(){
-        var ctx = shtem.canvas.canvasTile.getContext("2d");
+        let ctx = shtem.canvas.canvasTile.getContext("2d");
         ctx.drawImage(
             this.img,
             0,
@@ -74,7 +79,7 @@ shtem.GameEngine.prototype ={
     },
 
     mouseMoveEvent: function(evt){
-        var bounds = shtem.canvas.canvasMouse.getBoundingClientRect(); 
+        let bounds = shtem.canvas.canvasMouse.getBoundingClientRect(); 
         shtem.gameEngine.mouseX = evt.pageX - bounds.left;
         shtem.gameEngine.mouseY = evt.pageY - bounds.top;
     },
@@ -96,11 +101,14 @@ shtem.GameEngine.prototype ={
         shtem.tileset = new shtem.Tileset();
         shtem.player = new shtem.Player ();
         shtem.player.init();
+        let tempMeteor = new shtem.Meteor();
+        tempMeteor.init(shtem.C.METEOR_1);
+        this.meteors.push(tempMeteor);
         
-        let tempEnnemy = new shtem.Ennemy();
+        //let tempEnnemy = new shtem.Ennemy();
         //tempEnnemy.init(shtem.C.ENNEMY_TURREL_1);
-        tempEnnemy.init(2);
-        this.ennemies.push(tempEnnemy);
+        //tempEnnemy.init(2);
+        //this.ennemies.push(tempEnnemy);
         
         this.imgName = "assets/images/background/other_back6.png";
         this.img = shtem.tileset.get(this.imgName);
