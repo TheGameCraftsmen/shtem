@@ -139,21 +139,10 @@ shtem.Player.prototype ={
     
     missileLoop : function(){
         var missileToRemove = [];
-        this.missiles.forEach(function(m){
-            m.loop();
-            var _m = m;
-            shtem.gameEngine.ennemies.forEach(function(ennemy){
-                if (boxCollision(_m,ennemy) === true){
-                    _m.state = shtem.C.ITEM_STATE_DESTROYED;
-                    let exp = new shtem.Explosion();
-                    exp.init(_m.x, _m.y);
-                    shtem.gameEngine.explosions.push(exp);
-                    ennemy.setDamage(_m.damage);
-                }
-            });
-
-            if (m.state === shtem.C.ITEM_STATE_DESTROYED){
-                missileToRemove.push(m);
+        this.missiles.forEach(function(missile){
+            missile.loop();
+            if (missile.state === shtem.C.ITEM_STATE_DESTROYED){
+                missileToRemove.push(missile);
             }
         })
         removeItemArrayFromArray(missileToRemove,this.missiles);

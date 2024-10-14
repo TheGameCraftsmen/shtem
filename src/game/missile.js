@@ -59,6 +59,32 @@ shtem.Missile.prototype ={
         }
     },    
 
+    loopCollide : function(){
+        let _this = this;
+        shtem.gameEngine.ennemies.forEach(function(ennemy){
+            if (boxCollision(_this,ennemy) === true){
+                _this.state = shtem.C.ITEM_STATE_DESTROYED;
+                ennemy.setDamage(_this.damage);
+            }
+        });
+        console.log("rare");
+        if (this.state !== shtem.C.ITEM_STATE_DESTROYED){
+            shtem.gameEngine.meteors.forEach(function(meteor){
+                if (boxCollision(_this,meteor) === true){
+                    _this.state = shtem.C.ITEM_STATE_DESTROYED;
+                }
+            });
+        }
+        if (this.state === shtem.C.ITEM_STATE_DESTROYED){
+            let exp = new shtem.Explosion();
+            exp.init(this.x, this.y);
+            shtem.gameEngine.explosions.push(exp);
+            return this;
+            missileToRemove.push();
+        }
+        return null;
+    },
+
     loop : function(){
         if (this.state === shtem.C.ITEM_STATE_ALIVE){
             let d = new Date();
@@ -67,6 +93,7 @@ shtem.Missile.prototype ={
                 this.state = shtem.C.ITEM_STATE_DESTROYED;
             }else{
                 this.move();
+                this.loopCollide();
             }
         }
     },

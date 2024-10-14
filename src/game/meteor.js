@@ -34,7 +34,6 @@ shtem.Meteor.prototype ={
     render : function(){
         let ctx = shtem.canvas.canvasCreature.getContext("2d");
         ctx.setTransform(1, 0, 0, 1, this.x - shtem.player.x + shtem.gameEngine.centerX, this.y - shtem.player.y + shtem.gameEngine.centerY);
-        //ctx.rotate(this.angleRotation); 
         ctx.drawImage(
             this.spriteset,
             0,
