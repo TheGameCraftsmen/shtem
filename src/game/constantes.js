@@ -19,6 +19,8 @@ shtem.C = Object.freeze({
   // METEOR
   METEOR_1 : 1,
 
+  PORTAL_1 : 1,
+
   //SHIPS :
   SHIP_PLAYER_1 : 1,
 

@@ -13,6 +13,7 @@ shtem.GameEngine = function (){
     this.explosions = [];
     this.bonus = [];
     this.meteors = [];
+    this.portals = [];
 }
 
 shtem.GameEngine.prototype ={
@@ -37,6 +38,10 @@ shtem.GameEngine.prototype ={
       shtem.player.loop();
       
       shtem.player.render();
+
+      shtem.gameEngine.portals.forEach(function(portal){
+        portal.render();
+      })
 
       shtem.gameEngine.meteors.forEach(function(meteor){
         meteor.render();
@@ -109,11 +114,15 @@ shtem.GameEngine.prototype ={
         tempEnnemy.init(shtem.C.ENNEMY_TURREL_1);
         tempEnnemy.x = 800;
         this.ennemies.push(tempEnnemy);
-        
+
         tempEnnemy = new shtem.Ennemy();
         tempEnnemy.y = 800;
         tempEnnemy.init(2);
         this.ennemies.push(tempEnnemy);
+
+        let tempPortal = new shtem.Portal();
+        tempPortal.init(shtem.C.PORTAL_1);
+        this.portals.push(tempPortal);
         
         this.imgName = "assets/images/background/other_back6.png";
         this.img = shtem.tileset.get(this.imgName);
